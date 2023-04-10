@@ -36,7 +36,8 @@ public class Scramble2 {
         // pointers for left array (i), right array (j), and combined array (k)
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
-            if (l[i] <= r[j]) {
+            //if (l[i] <= r[j]) {
+            if(l[i].compareTo(r[j])){
                 arr[k++] = l[i++];
             } else {
                 arr[k++] = r[j++];

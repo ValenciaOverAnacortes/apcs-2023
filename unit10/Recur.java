@@ -17,7 +17,7 @@ public class Recur {
         else
             return f(n - 1) + f(n - 2);
     }
-
+    
     public static boolean has(String input) {
         if (input.length() < 2)
             return false;
@@ -62,10 +62,11 @@ public class Recur {
     public static void main(String[] args) {
 
         // Consider function fun3
-        // System.out.println(fun3(5));
+         System.out.println(fun3(5));
+         //fun3 does 3 to the power of n
 
         // Consider function f
-        // System.out.println(f(6));
+         System.out.println(f(5));
 
         // Consider function has
         // System.out.println(has("hello"));
