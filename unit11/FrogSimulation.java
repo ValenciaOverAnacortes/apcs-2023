@@ -54,9 +54,25 @@ public class FrogSimulation {
      * false otherwise.
      */
     public boolean simulate() {
-        /* to be implemented in part (a) */
-        return false; // replace me!
-    }
+            int pos = 0;
+            for(int i = 0; i < maxHops; i++){
+                if(pos < 0){
+                    return false;
+                }
+                else if(pos >= goalDistance){
+                    return true;
+                }
+                else{
+                    pos = pos + hopDistance();
+                }
+            }
+    
+            if(pos >= goalDistance){
+                return true;
+            }
+            return false;
+        }
+    
 
     /**
      * Runs num simulations and returns the proportion of simulations in which the
