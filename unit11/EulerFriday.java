@@ -1,4 +1,7 @@
 package unit11;
+import javax.sound.midi.Soundbank;
+
+import unit10.Recur;
 
 public class EulerFriday {
 
@@ -7,12 +10,51 @@ public class EulerFriday {
         // 1
         int sum = 0;
         for (int i = 0; i < 1000; i++) {
-
+            if(i%3 == 0 || i%5 == 0){
+                sum+=i;
+            }
         }
         System.out.println(sum);
 
         // 2
+        sum = 0;
+        int a = 1;
+        int b = 2;
+        while(b< 4000000){
+            if(b%2 == 0){
+                sum+=b;
+            }
+            int c = a + b;
+            a = b;
+            b = c;
 
+
+            long factorMe = 600851475143L;
+            int factor = 2;
+            while(factorMe > factor){
+                if(factorMe > factor){
+                    factorMe/=factor;
+                }
+                else{
+                    factor++;
+                }
+            }
+            System.out.println(factor);
+        }
+
+        int largestPal = 0;
+        for(int i = 100; i <= 999; i++){
+            for(int o = 100; o <= 999; o++){
+                int product = i*o;
+                String productString = Integer.toString(product);
+                if(Recur.pot(productString)){
+                    if(product > largestPal){
+                        largestPal = product;
+                    }
+                }
+            }
+        }
+        System.out.println(largestPal);
     }
 
     static int[] prob8scaffold() {
