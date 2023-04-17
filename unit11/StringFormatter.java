@@ -13,8 +13,12 @@ public class StringFormatter {
      * only.
      */
     public static int totalLetters(List<String> wordList) {
-        // TODO part (a)
-        return -1; // replace me!
+        int count = 0;
+        for (int i = 0; i < wordList.size(); i++) {
+            count += wordList.get(i).length();
+        }
+
+        return count; // replace me!
     }
 
     /**
@@ -26,8 +30,10 @@ public class StringFormatter {
      */
     public static int basicGapWidth(List<String> wordList,
             int formattedLen) {
-        // TODO part (b)
-        return -1; // replace me!
+            int a = formattedLen - totalLetters(wordList);
+            return a/(wordList.size()-1);
+
+        
     }
 
     /**
@@ -43,9 +49,28 @@ public class StringFormatter {
      * question.
      */
     public static String format(List<String> wordList, int formattedLen) {
-        // TODO part (c)
-        return ""; // replace me!
+        int left = leftoverSpaces(wordList, formattedLen);
+        int width = basicGapWidth(wordList, formattedLen);
+        String myString = "";
+        for(int i = 0; i < wordList.size() - 1; i++)
+        {
+            myString += wordList.get(i);
+    
+            for(int a = 1; a <= width; a++)
+                myString += " ";
+    
+            if(left > 0)
+            {
+                myString += " ";
+                left--;
+            }
+        }
+    
+        myString += wordList.get(wordList.size() - 1);
+    
+        return myString;
     }
+
 
     /**
      * Returns the number of leftover spaces when wordList is used to produce
