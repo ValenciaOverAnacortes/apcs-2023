@@ -15,8 +15,16 @@ public class Maze {
      * @param line the values to be placed in the maze.
      */
     public Maze(int rows, int cols, String line) {
-        // TODO part a
-
+        char[] word = line.toCharArray();
+        int count = 0;
+        maze = new char[rows][cols];
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                maze[r][c] = word[count];
+                count++;
+            }
+            System.out.println(Arrays.toString(maze[r]));
+        }
     }
 
     /**
@@ -53,9 +61,30 @@ public class Maze {
      * @param c current column index
      */
     private void check(int r, int c) {
-        // TODO part b
+        if (r < 0 || r >= maze.length || c < 0 || c >= maze[0].length) { //outside
+            return;
+          }
+        
+          char cell = maze[r][c];
+          if (cell == '#') {
+            return;
+          }
+           else if (cell == '$') {
+            solution = true;
+          }
+           else if (cell == '.' || cell == '@') {
+            maze[r][c] = 'X';
+        
+            check(r, c+1); // right
+            check(r+1, c); // down
+            check(r, c-1); // left
+            check(r-1, c); // up
+        
+            maze[r][c] = '.'; // not visietd 
+          }
+        }
 
-    }
+    
 
     /**
      * Determines if there is a solution (a path of '.') for this maze.
@@ -63,8 +92,11 @@ public class Maze {
      * @return true if the maze has a path from Start (@) to End ($).
      */
     public boolean hasSolution() {
-        // TODO part c
-        return false; // replace me!
+        String start = getStart();
+        int row = Integer.parseInt(start.split(" ")[0]);
+        int col = Integer.parseInt(start.split(" ")[1]);
+        check(row, col);
+        return solution;
 
     }
 
