@@ -1,0 +1,3 @@
+I want to create a Discord bot, which involves learning JavaScript, learning how to make the bot online (server stuff?), how to connect and use Discord's API... I want my bot to respond to simple commands (!ping -> "pong"...), and I want to add other different features but I don't know what yet, I need to 
+make it work first. The biggest goal would be to make a music bot, that joins the voice channel, waits for an input, connects to youtube and plays the audio. That would also include connecting to YouTube API and it would be really hard but not impossible, if I feel like it's going to be too hard, I will change 
+the idea and go for something else
