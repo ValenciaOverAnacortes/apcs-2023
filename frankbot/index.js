@@ -80,10 +80,9 @@ client.on('messageCreate', async (message) => {
         message.channel.send(`No lyrics found for "${query}".`);
       } else {
         // Cleaning up the lyrics by removing unwanted lines
-        const cleanedLyrics = lyrics.replace(
-        );
-
-        message.channel.send(`Lyrics for "${query}":\n\n${cleanedlyrics}`);
+        let cleanedLyrics = lyrics.replace('** This Lyrics is NOT for Commercial use **', '');
+        cleanedLyrics = cleanedLyrics.replace('**', '')
+        message.channel.send(`Lyrics for "${query}":\n\n${cleanedLyrics}`);
       }
     } catch (error) {
       console.error(error);
