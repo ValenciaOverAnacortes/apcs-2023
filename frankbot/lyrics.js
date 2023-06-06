@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const lyricsFinder = require('lyrics-finder');
+const lyricsFinder = require('axios');
 
 const prefix = '!'; // Customize your bot's prefix here
 
@@ -15,18 +15,19 @@ client.on('message', async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command === 'lyrics') {
-    if (!args.length) {
-      return message.reply('Please provide a song name!');
+    if (args.length < 2) {
+      return message.reply('Please provide both the song name and artist!');
     }
-
     const query = args.join(' ');
+    let artist = args[args.length - 1];
+    artist = artist.get(args);
 
     try {
-      const lyrics = await lyricsFinder(query);
+      const lyrics = await lyricsFinder(query, artist);
       if (!lyrics) {
-        message.channel.send(`No lyrics found for "${query}".`);
+        message.channel.send(`No lyrics found for "${query}" by "${artist}".`);
       } else {
-        message.channel.send(`Lyrics for "${query}":\n\n${lyrics}`);
+        message.channel.send(`Lyrics for "${query}" by "${artist}":\n\n${lyrics}`);
       }
     } catch (error) {
       console.error(error);
@@ -35,5 +36,4 @@ client.on('message', async (message) => {
   }
 });
 
-// Replace 'YOUR_DISCORD_BOT_TOKEN' with your actual bot token
-client.login('YMTEwNjMyMzE5MTAxNTY2OTc5MA.G2wu-u.KLyPe5Rf7hm-OU5_VOglF0woEIndvylFPEk42g');
+client.login('MTEwNjMyMzE5MTAxNTY2OTc5MA.GblwpD.xG-pvzjyy8O9QDr2urIdJoj0Lk-uDS1ceEJHsY');

@@ -1,8 +1,8 @@
 const{Client, GatewayIntentBits, Partials, SystemChannelFlagsBitField} = require("discord.js");
 const config = require('./config.json');
 const axios = require('axios');
+const fs = require("fs");
 const prefix = '!';
-let rizz = 0;
 const musixmatchApiKey = '80fb3e93fe268cc8dea0ae3e2610e8e5';
 
 const client = new Client({
@@ -16,20 +16,29 @@ client.on('messageCreate', async message =>{
 })
 
 
-const fs = require("fs");
-fs.readFile("./frankbot.json", "utf8", (err, jsonString) => {
-  if (err) {
-    console.log("File read failed:", err);
-    return;
-  }
-  console.log("File data:", jsonString);
-});
+const data = fs.readFileSync("./frankbot.json", "utf8");
+const frankbot = JSON.parse(data);
+console.log(frankbot);
+
+if (!frankbot.frank) {
+  frankbot.frank = 0;
+}
+
 
 client.on('messageCreate', async message =>{
-    if(message.content == '!rizz'){
-        rizz += 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-        message.channel.send({content: "Frank's rizz is " + rizz})
+    if(message.content.includes("rizz") && (!message.author.bot)){
+        frankbot.frank += 1;
+        fs.writeFileSync("./frankbot.json", JSON.stringify(frankbot));
+        message.channel.send({content: "Frank's rizz is " + frankbot.frank})
     }
+})
+
+client.on('messageCreate', async (message) => {
+  if(message.content == "!frankreset"){
+    frankbot.frank = 0;
+    fs.writeFileSync("./frankbot.json", JSON.stringify(frankbot));
+    message.channel.send({content: "Frank's rizz has been reset"})
+  }
 })
 
 client.on('messageCreate', async message =>{
@@ -80,8 +89,11 @@ client.on('messageCreate', async (message) => {
         message.channel.send(`No lyrics found for "${query}".`);
       } else {
         // Cleaning up the lyrics by removing unwanted lines
-        let cleanedLyrics = lyrics.replace('** This Lyrics is NOT for Commercial use **', '');
-        cleanedLyrics = cleanedLyrics.replace('**', '')
+        let cleanedLyrics = lyrics
+        .replace(/\n\.+/, "") // replace the "..." line
+        .replace(/\n\*+ This Lyrics is NOT for Commercial use \*+/, "") // replace the disclaimer
+        .replace(/\n\(\d+\)/, "") // replace the ending number
+        .trim();
         message.channel.send(`Lyrics for "${query}":\n\n${cleanedLyrics}`);
       }
     } catch (error) {
