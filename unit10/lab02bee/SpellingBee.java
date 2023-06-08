@@ -3,6 +3,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class SpellingBee {
 
@@ -15,34 +16,37 @@ public class SpellingBee {
 
     }
     public boolean checkWord(String word) {
+        if (word.length() < 4) {
+            //System.out.println("The word has to be at least 4 characters");
+            return false;
+        }
+
         char[] arr = word.toCharArray();
-        boolean both = false;
-        boolean both2 = false;
-        if(arr.length >= 4){
-            for (int a = 0; a < arr.length; a++) {
-                if(arr[a] == mustUse){
-                    both = true;
-                }
+        boolean containsMustUse = false;
+        boolean containsAllLetters = true;
+
+        for (char c : arr) {
+            if (c == mustUse) {
+                containsMustUse = true;
             }
-            for(int b = 0; b < letters.length; b++){
-                if(arr[b] == letters[b]){
-                    both2 = true;
-                }
+            if (!containsLetter(c)) {
+                containsAllLetters = false;
+                break;
             }
-            if(both && both2){
+        }
+
+        return containsMustUse && containsAllLetters;
+    }
+
+    private boolean containsLetter(char c) {
+        for (char letter : letters) {
+            if (letter == c) {
                 return true;
             }
-            else{
-                return false;
-            }
-        }
-        
-        else{
-            System.out.println("The word has to be at least 4 characters");
         }
         return false;
-            
     }
+
         
 
     /**
@@ -69,17 +73,28 @@ public class SpellingBee {
         String[] words = loadFile("words_dropped.txt").split("\n");
         System.out.println("Loaded " + words.length + " words");
         // TODO solve me!
-        // SpellingBee bee = new SpellingBee("ranglty".toCharArray(), 'y');
+        SpellingBee bee = new SpellingBee("ranglty".toCharArray(), 'y');
+        
 
         // TODO sort words!
+        Arrays.sort(words);
+
 
         // TODO what position in the sorted list is the word "search" ?
+
+        int index = Arrays.binarySearch(words, "search");
+        if (index >= 0) {
+            System.out.println("Position of the word search: " + (index + 1));
+        } else {
+            System.out.println("Word not found.");
+        }
+
         // linear search
         int n = 0;
         for(String word : words){
             n++;
-            if(word.equals("frank")){
-                System.out.println(n);
+            if(bee.checkWord(word)){
+                System.out.println(word);
             }
         }
 
@@ -96,15 +111,15 @@ public class SpellingBee {
         check = words[guess].compareTo(findMe);
         System.out.println("word is " + words[guess]);
         System.out.println("check is " + check);
-        while(check != 0){
-            if(check < 0){
-                begin = guess;
-            }
-            else if(check > 0){
-                end = guess;
-            }
-            guess = (begin +end) / 2;
-        }
+        // while(check != 0){
+        //     if(check < 0){
+        //         begin = guess;
+        //     }
+        //     else if(check > 0){
+        //         end = guess;
+        //     }
+        //     guess = (begin +end) / 2;
+        // }
             
 
     }
