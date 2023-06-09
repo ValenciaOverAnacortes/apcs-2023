@@ -2,6 +2,8 @@ package unit10;
 
 import java.util.Arrays;
 
+import java.util.Random;
+
 public class Scramble {
 
     /**
@@ -73,13 +75,59 @@ public class Scramble {
         }
     }
 
+
+    public static void selectionSort(String arr[]) {
+    int n = arr.length;
+    // One by one move boundary of unsorted subarray
+    for (int i = 0; i < n - 1; i++) {
+        // Find the minimum element in unsorted array
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j].compareTo(arr[min_idx]) < 0) {
+                min_idx = j;
+            }
+        }
+
+        // Swap the found minimum element with the first element
+        String temp = arr[min_idx];
+        arr[min_idx] = arr[i];
+        arr[i] = temp;
+    }
+}
+
     /**
      * TODO how does this function work?
      * 
      * @param arr array of integers to shuffle
      */
+
+
     public static void shuffle(int arr[]) {
-        // TODO
+        Random rand = new Random();
+
+        for (int i = arr.length - 1; i > 0; i--) {
+            // Generate a random index between 0 and i (inclusive)
+            int j = rand.nextInt(i + 1);
+
+            // Swap arr[i] with arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    public static void shuffle(String arr[]) {
+        Random rand = new Random();
+
+        for (int i = arr.length - 1; i > 0; i--) {
+            // Generate a random index between 0 and i (inclusive)
+            int j = rand.nextInt(i + 1);
+
+            // Swap arr[i] with arr[j]
+            String temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
     }
 
     public static void main(String args[]) {
@@ -94,6 +142,12 @@ public class Scramble {
 
         shuffle(arr2);
         System.out.println("And shuffled: " + Arrays.toString(arr2));
+
+        String[] stringarr = {"frank", "marc", "frank2", "yes"};
+        selectionSort(stringarr);
+        System.out.println("Selection sorted: " + Arrays.toString(stringarr));
+        shuffle(stringarr);
+        System.out.println("And shuffled: " + Arrays.toString(stringarr));
 
     }
 }
