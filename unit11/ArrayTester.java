@@ -17,10 +17,14 @@ public class ArrayTester {
      * Precondition: c is a valid column index in arr2D.
      * Postcondition: arr2D is unchanged.
      */
-    public static int[] getColumn(int[][] arr2D, int c) {
-        // TODO part a
-        return null; // replace me!
-    }
+    public static int[] getColumn(int[][] arr2D, int c){
+        int[] column = new int[arr2D.length];
+
+        for(int i = 0; i < column.length; i++)
+            column[i] = arr2D[i][c];
+
+        return column;
+        }
 
     /**
      * Returns true if and only if every value in arr1 appears in arr2.
@@ -50,11 +54,21 @@ public class ArrayTester {
      * Precondition: square has an equal number of rows and columns.
      * square has at least one row.
      */
-    public static boolean isLatin(int[][] square) {
-        // TODO part b
-        return false; // replace me!
-    }
+    public static boolean isLatin(int[][] square){
+        if(containsDuplicates(square[0]))
+            return false;
 
+        for(int r = 1; r < square.length; r++)
+            if( ! hasAllValues(square[0], square[r]) )
+                return false;
+
+        for(int c = 0; c < square[0].length; c++)
+            if(hasAllValues(square[0], getColumn(square, c)) == false){
+                return false;
+            }
+
+        return true;
+    }
     public static void check(boolean test) throws AssertionError {
         if (!test)
             throw new AssertionError("sad panda");

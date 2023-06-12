@@ -6,17 +6,14 @@ import java.util.Arrays;
 
 public class ArrayResizer {
     public static boolean isNonZeroRow(int[][] array2D, int r) {
-        boolean bool = true;
-        for(int c = 0; c < array2D[r].length; c++){
-            if(array2D[r][c] == 0){
-                bool = false;
-            }
-        }
-        return bool; // replace me
+        for(int c = 0; c < array2D[0].length; c++)
+        if(array2D[r][c] == 0)
+            return false;
+
+        return true;
     }
 
     public static int numNonZeroRows(int[][] array2D) {
-        /* implementation not shown */
         int count = 0;
         for (int r = 0; r < array2D.length; r++) {
             if (ArrayResizer.isNonZeroRow(array2D, r))
@@ -25,18 +22,21 @@ public class ArrayResizer {
         return count;
     }
 
-    public static int[][] resize(int[][] array2D) {
+    public static int[][] resize(int[][] array2D)
+{
+    int[][] newArray = new int[numNonZeroRows(array2D)][array2D[0].length];
 
-        int[][] myArray = new int[numNonZeroRows(array2D)][array2D[0].length];
-        int start = 0;
-        for(int r = 0; r < array2D.length; r++){
-            if(isNonZeroRow(array2D, r) != false){
-            myArray[start] = array2D[r];
-            start++;
-            }
+    int newR = 0;
+    for(int prevR = 0; prevR < array2D.length; prevR++){
+        if(isNonZeroRow(array2D, prevR)){
+            // could copy elements within row instead
+            newArray[newR] = array2D[prevR];
+            newR++;
         }
-        return myArray; // replace me
     }
+
+    return newArray;
+}
 
     public static void check(boolean test) throws AssertionError {
         if (!test)
