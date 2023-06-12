@@ -80,9 +80,14 @@ public class FrogSimulation {
      * successfully reached or passed the goal.
      * Precondition: num > 0
      */
-    public double runSimulations(int num) {
-        /* to be implemented in part (b) */
-        return -1; // replace me!
+    public double runSimulations(int num){
+        int successful = 0;
+
+        for(int i = 1; i <= num; i++)
+            if(simulate())
+                successful++;
+
+        return successful / (double)num;
     }
 
     public static void check(boolean test) throws AssertionError {
